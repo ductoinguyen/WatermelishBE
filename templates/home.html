@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hướng dẫn API</title>
+    <link rel="shortcut icon" href="https://static.thenounproject.com/png/1981384-200.png"/>
+</head>
+<body>
+    <h2>Server:</h2>
+    <div class = 'element'>
+        <h2>@app.route("/dangnhap", methods=["POST"])</h2>
+        <div>Parameters: username, password, ví dụ {"username": "nhom13", "password": "nhom13"}</div>
+        <div>Return 1 mảng 1 phần tử</div>
+        <ul>
+            <li>_id</li>
+            <ul>
+                <li>Một string, ví dụ "5f963c2dcca964d848d80d66"</li>
+                <li>-1 ⇒ Có thể sai username hoặc password</li>
+            </ul>
+        </ul>
+    </div>
+
+    <div class = 'element'>
+        <h2>@app.route("/kiemtrataikhoan/&lt;username&gt;", methods=["GET"])</h2>
+        <div>Mục đích: Kiểm tra xem tài khoản đã tồn tại hay chưa</div>
+        <div>Return 1 mảng 1 phần tử</div>
+        <ul>
+            <li>exist_account</li>
+            <ul>
+                <li>"yes": tài khoản đã tồn tại ⇒ đăng ký không thành công</li>
+                <li>"no": tài khoản chưa tồn tại ⇒ <b>có thể</b> đăng ký username mới này</li>
+            </ul>
+        </ul>
+    </div>
+
+	<div class = 'element'>
+        <h2>@app.route("/dangky", methods=["POST"])</h2>
+        <div>Parameters: username, password, name, ví dụ {“username”: “nhom13”, “password”: “nhom13”, “name”: “aa”}</div>
+        <div>Return 1 mảng 1 phần tử</div>
+        <ul>
+            <li>result</li>
+            <ul>
+                <li>"thành công"</li>
+                <li>"thất bại"</li>
+            </ul>
+        </ul>
+    </div>
+</body>
+</html>
