@@ -14,8 +14,7 @@ app = Flask(__name__, template_folder=TEMPLATE_DIR, static_folder=STATIC_DIR)
 def checkLogin():
     username = request.args.get('username')
     password = request.args.get('password')
-    global db
-    result = connection_db.checkLogin(db, username, password)
+    result = connection_db.checkLogin(username, password)
     data = [{"_id": result}]
     return app.response_class(json.dumps(data),mimetype='application/json')
 
@@ -23,7 +22,7 @@ def checkLogin():
 def checkAccount(username):
     username = username.strip()
     global db
-    result = connection_db.checkAccount(db, username)
+    result = connection_db.checkAccount(username)
     data = [{"exist_account": result}]
     return app.response_class(json.dumps(data),mimetype='application/json')
 
@@ -33,7 +32,7 @@ def signup():
     password = request.args.get('password')
     name = request.args.get('name')
     global db
-    result = connection_db.signup(db, username, password, name)
+    result = connection_db.signup(username, password, name)
     data = [{"result": result}]
     return app.response_class(json.dumps(data),mimetype='application/json')
 
@@ -46,5 +45,4 @@ def test():
     return app.response_class(json.dumps([{"ok": 1}]),mimetype='application/json')
 
 if __name__ == "__main__":
-    db = connection_db.getDB()
     app.run(debug=True)

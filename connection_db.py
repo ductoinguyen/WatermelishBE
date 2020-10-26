@@ -6,8 +6,9 @@ def getDB():
     db = myclient["watermelishDB"]
     return db
  
-def checkLogin(db, username, password):
+def checkLogin(username, password):
     try:
+        db = getDB()
         result = (db.watermelishCollection.find({"username": username, "password": password}, {"_id": True}))
         for x in result:
             break
@@ -15,8 +16,9 @@ def checkLogin(db, username, password):
     except:
         return -1
 
-def checkAccount(db, username):
+def checkAccount(username):
     try:
+        db = getDB()
         result = (db.watermelishCollection.find({"username": username}, {"_id": True}))
         for x in result:
             break
@@ -25,8 +27,9 @@ def checkAccount(db, username):
     except:
         return "no"
 
-def signup(db, username, password, name):
+def signup(username, password, name):
     try: 
+        db = getDB()
         if checkAccount(db, username) == "yes":
             return "thất bại"
         db.watermelishCollection.insert({"username": username, "password": password, "name": name})
