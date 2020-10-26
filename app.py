@@ -21,7 +21,6 @@ def checkLogin():
 @app.route("/kiemtrataikhoan/<username>", methods=["GET"])
 def checkAccount(username):
     username = username.strip()
-    global db
     result = connection_db.checkAccount(username)
     data = [{"exist_account": result}]
     return app.response_class(json.dumps(data),mimetype='application/json')
@@ -31,7 +30,6 @@ def signup():
     username = request.args.get('username')
     password = request.args.get('password')
     name = request.args.get('name')
-    global db
     result = connection_db.signup(username, password, name)
     data = [{"result": result}]
     return app.response_class(json.dumps(data),mimetype='application/json')
