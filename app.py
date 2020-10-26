@@ -41,6 +41,10 @@ def signup():
 def home():
     return render_template("home.html")
 
+@app.route("/test", methods=["GET"])
+def home():
+    return app.response_class(json.dumps([{"ok": 1}]),mimetype='application/json')
+
 if __name__ == "__main__":
     db = connection_db.getDB()
     app.run(debug=True)
