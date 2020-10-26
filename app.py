@@ -42,7 +42,7 @@ def home():
     return render_template("home.html")
 
 @app.route("/test", methods=["GET"])
-def home():
+def test():
     return app.response_class(json.dumps([{"ok": 1}]),mimetype='application/json')
 
 if __name__ == "__main__":
