@@ -5,6 +5,7 @@ import numpy as np
 from fuzzywuzzy import fuzz
 from fuzzywuzzy import process 
 import os
+import threading
 
 def getDB():
     MONGO_URL = os.environ.get('MONGO_URL')
@@ -14,9 +15,9 @@ def getDB():
     db = myclient["watermelishDB"]
     return db
  
-def checkLogin(username, password):
+def checkLogin(db, username, password):
     try:
-        db = getDB()
+        # db = getDB()
         result = (db.watermelishCollection.find({"username": username, "password": password}, {"_id": True}))
         for x in result:
             break
@@ -33,9 +34,9 @@ def checkLogin(username, password):
 #     except:
 #         return -1
 
-def checkAccount(username):
+def checkAccount(db, username):
     try:
-        db = getDB()
+        # db = getDB()
         result = (db.watermelishCollection.find({"username": username}, {"_id": True}))
         for x in result:
             break
@@ -44,9 +45,9 @@ def checkAccount(username):
     except:
         return "no"
 
-def signup(username, password, name):
+def signup(db, username, password, name):
     try: 
-        db = getDB()
+        # db = getDB()
         if checkAccount(db, username) == "yes":
             return "thất bại"
         db.watermelishCollection.insert({"username": username, "password": password, "name": name})
@@ -54,19 +55,27 @@ def signup(username, password, name):
     except:
         return "thất bại"
 
-def searchWord(username, stringSearch):
+def findInWordSet(g, data, word_sets, word_set, stringSearch):
+    for word in word_sets[word_set]:
+        if (fuzz.token_set_ratio(word[0], stringSearch) > 80):
+            # print(fuzz.token_set_ratio(word[0], stringSearch), word)
+            data.append(word) 
+
+def searchWord(db, username, stringSearch):
     try:
-        db = getDB()
+        # db = getDB()
         allWords = db.watermelishCollection.find({"username": username}, {"word_sets": True})
         data = []
         for x in allWords:
             break
         word_sets = x["word_sets"]
+        g = []
         for word_set in word_sets:
-            for word in word_sets[word_set]:
-                if (fuzz.token_set_ratio(word[0], stringSearch) > 80):
-                    # print(fuzz.token_set_ratio(word[0], stringSearch), word)
-                    data.append(word)           
+            t = threading.Thread(target=findInWordSet, args=(g, data, word_sets, word_set, stringSearch,))
+            t.start()
+            g.append(t) 
+        while (any([x.is_alive() for x in g])):
+            pass
         # print(len(word_sets))
         return data
     except:

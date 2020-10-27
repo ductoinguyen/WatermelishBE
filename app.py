@@ -9,7 +9,7 @@ STATIC_DIR = os.path.abspath('./static')
 
 # app = Flask(__name__) # to make the app run without any
 app = Flask(__name__, template_folder=TEMPLATE_DIR, static_folder=STATIC_DIR)
-# db = connection_db.getDB()
+db = connection_db.getDB()
 
 @app.route("/dangnhap", methods=["POST"])
 def checkLogin():
@@ -17,7 +17,8 @@ def checkLogin():
     # password = request.args.get('password')
     username = request.form['username']
     password = request.form['password']
-    result = connection_db.checkLogin(username, password)
+    global db
+    result = connection_db.checkLogin(db, username, password)
     data = [{"_id": result}]
     return app.response_class(json.dumps(data),mimetype='application/json')
 
@@ -33,7 +34,8 @@ def checkLogin():
 @app.route("/kiemtrataikhoan/<username>", methods=["GET"])
 def checkAccount(username):
     username = username.strip()
-    result = connection_db.checkAccount(username)
+    global db
+    result = connection_db.checkAccount(db, username)
     data = [{"exist_account": result}]
     return app.response_class(json.dumps(data),mimetype='application/json')
 
@@ -42,7 +44,8 @@ def signup():
     username = request.args.get('username')
     password = request.args.get('password')
     name = request.args.get('name')
-    result = connection_db.signup(username, password, name)
+    global db
+    result = connection_db.signup(db, username, password, name)
     data = [{"result": result}]
     return app.response_class(json.dumps(data),mimetype='application/json')
 
@@ -52,7 +55,8 @@ def home():
 
 @app.route("/timtu/<username>/<stringSearch>", methods=["GET"])
 def searchWord(username, stringSearch):
-    result = connection_db.searchWord(username, stringSearch)
+    global db
+    result = connection_db.searchWord(db, username, stringSearch)
     data = [{"result": result}]
     return app.response_class(json.dumps(data),mimetype='application/json')
 
