@@ -4,9 +4,13 @@ import pandas as pd
 import numpy as np
 from fuzzywuzzy import fuzz
 from fuzzywuzzy import process 
+import os
 
 def getDB():
-    myclient = MongoClient("mongodb+srv://hequantri:hequantri@cluster0.q0gxn.gcp.mongodb.net/watermelishDB?retryWrites=true&w=majority")
+    MONGO_URL = os.environ.get('MONGO_URL')
+    if not MONGO_URL:
+        MONGO_URL = "mongodb+srv://hequantri:hequantri@cluster0.q0gxn.gcp.mongodb.net/watermelishDB?retryWrites=true&w=majority";
+    myclient = MongoClient(MONGO_URL)
     db = myclient["watermelishDB"]
     return db
  
