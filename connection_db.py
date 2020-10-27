@@ -20,14 +20,14 @@ def checkLogin(username, password):
     except:
         return -1
     
-def testcheckLogin(db, username, password):
-    try:
-        result = (db.watermelishCollection.find({"username": username, "password": password}, {"_id": True}))
-        for x in result:
-            break
-        return (str(x['_id']))
-    except:
-        return -1
+# def testcheckLogin(db, username, password):
+#     try:
+#         result = (db.watermelishCollection.find({"username": username, "password": password}, {"_id": True}))
+#         for x in result:
+#             break
+#         return (str(x['_id']))
+#     except:
+#         return -1
 
 def checkAccount(username):
     try:
