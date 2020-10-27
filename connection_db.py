@@ -1,5 +1,9 @@
 import pymongo
 from pymongo import MongoClient
+import pandas as pd
+import numpy as np
+from fuzzywuzzy import fuzz
+from fuzzywuzzy import process 
 
 def getDB():
     myclient = MongoClient("mongodb+srv://hequantri:hequantri@cluster0.q0gxn.gcp.mongodb.net/watermelishDB?retryWrites=true&w=majority")
@@ -9,6 +13,15 @@ def getDB():
 def checkLogin(username, password):
     try:
         db = getDB()
+        result = (db.watermelishCollection.find({"username": username, "password": password}, {"_id": True}))
+        for x in result:
+            break
+        return (str(x['_id']))
+    except:
+        return -1
+    
+def testcheckLogin(db, username, password):
+    try:
         result = (db.watermelishCollection.find({"username": username, "password": password}, {"_id": True}))
         for x in result:
             break
@@ -37,5 +50,22 @@ def signup(username, password, name):
     except:
         return "thất bại"
 
-# db = getDB()
-# print(checkLogin(db, "nhom13", "nhom13"))
+def searchWord(username, stringSearch):
+    try:
+        db = getDB()
+        allWords = db.watermelishCollection.find({"username": username}, {"word_sets": True})
+        data = []
+        for x in allWords:
+            break
+        word_sets = x["word_sets"]
+        for word_set in word_sets:
+            for word in word_sets[word_set]:
+                if (fuzz.token_set_ratio(word[0], stringSearch) > 80):
+                    # print(fuzz.token_set_ratio(word[0], stringSearch), word)
+                    data.append(word)           
+        # print(len(word_sets))
+        return data
+    except:
+        return "Không tìm thấy"
+
+# print(searchWord("nhom13", "interlet"))

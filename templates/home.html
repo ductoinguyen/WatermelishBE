@@ -5,9 +5,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hướng dẫn API</title>
     <link rel="shortcut icon" href="https://static.thenounproject.com/png/1981384-200.png"/>
+    <style>
+        .do {
+            color: red;
+        }
+    </style>
 </head>
 <body>
-    <h2>Server:</h2>
+    <h2 class='do'>Server: http://watermelish.herokuapp.com/</h2><hr>
+
+    <h2 class='do'>Update: 27/07/2020</h2>
+    <div class = 'element'>
+        <h2>@app.route("/timtu/&lt;username>/&lt;stringSearch>", methods=["GET"])</h2>
+        <div>ví dụ interlet => internet</div>
+        <div>Return 1 mảng 1 phần tử</div>
+        <ul>
+            <li>result</li>
+            <ul>
+                <li>Một mảng các mảng 3 phần tử [tuTiengAnh, tuLoai, nghiaTiengViet]</li>
+                <li>Không tìm thấy</li>
+            </ul>
+        </ul>
+    </div>
+    <hr>
+
+
+    <h2 class='do'>Update: 26/07/2020</h2>
     <div class = 'element'>
         <h2>@app.route("/dangnhap", methods=["POST"])</h2>
         <div>Parameters: username, password, ví dụ {"username": "nhom13", "password": "nhom13"}</div>
