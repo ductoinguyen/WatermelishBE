@@ -9,7 +9,7 @@ STATIC_DIR = os.path.abspath('./static')
 
 # app = Flask(__name__) # to make the app run without any
 app = Flask(__name__, template_folder=TEMPLATE_DIR, static_folder=STATIC_DIR)
-# db = connection_db.getDB()
+db = connection_db.getDB()
 
 @app.route("/dangnhap", methods=["POST"])
 def checkLogin():
@@ -19,14 +19,14 @@ def checkLogin():
     data = [{"_id": result}]
     return app.response_class(json.dumps(data),mimetype='application/json')
 
-# @app.route("/testdangnhap", methods=["POST"])
-# def testcheckLogin():
-#     username = request.args.get('username')
-#     password = request.args.get('password')
-#     global db
-#     result = connection_db.testcheckLogin(db, username, password)
-#     data = [{"_id": result}]
-#     return app.response_class(json.dumps(data),mimetype='application/json')
+@app.route("/testdangnhap", methods=["POST"])
+def testcheckLogin():
+    username = request.args.get('username')
+    password = request.args.get('password')
+    global db
+    result = connection_db.testcheckLogin(db, username, password)
+    data = [{"_id": result}]
+    return app.response_class(json.dumps(data),mimetype='application/json')
 
 @app.route("/kiemtrataikhoan/<username>", methods=["GET"])
 def checkAccount(username):
