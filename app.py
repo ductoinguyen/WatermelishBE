@@ -13,8 +13,10 @@ app = Flask(__name__, template_folder=TEMPLATE_DIR, static_folder=STATIC_DIR)
 
 @app.route("/dangnhap", methods=["POST"])
 def checkLogin():
-    username = request.args.get('username')
-    password = request.args.get('password')
+    # username = request.args.get('username')
+    # password = request.args.get('password')
+    username = request.form['username']
+    password = request.form['password']
     result = connection_db.checkLogin(username, password)
     data = [{"_id": result}]
     return app.response_class(json.dumps(data),mimetype='application/json')
