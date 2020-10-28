@@ -80,5 +80,32 @@ def searchWord(db, username, stringSearch):
         return data
     except:
         return "Không tìm thấy"
+    
+def setTarget(db, username, target):
+    try:
+        db.watermelishCollection.update({"username": username}, {"$set": {"target": target}})
+        return "Thành công"
+    except:
+        return "Thất bại"
+    
+def getTarget(db, username):
+    try:
+        result = db.watermelishCollection.find({"username": username}, {"target": True})
+        for x in result:
+            return x["target"]
+    except:
+        return "Không có"
+    
+def editAccount(db, username, old_password, new_password, name):
+    try:
+        if checkLogin(db, username, old_password) == -1:
+            return "Sai mật khẩu"
+        db.watermelishCollection.update({"username": username}, {"$set": {"password": new_password, "name": name}})
+        return "Thành công"
+    except:
+        return "Thất bại"
 
 # print(searchWord("nhom13", "interlet"))
+
+# db = getDB()
+# print(getTarget(db, "nhom13"))

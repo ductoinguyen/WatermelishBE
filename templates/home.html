@@ -14,10 +14,52 @@
 <body>
     <h2 class='do'>Server: http://watermelish.herokuapp.com/</h2><hr>
 
+    <h2 class='do'>Update: 28/07/2020</h2>
+    <div class = 'element'>
+        <h2>@app.route("/datmuctieu/&lt;username>/&lt;int:target>", methods=["GET"])</h2>
+        <div>Parameters: username, target</div>
+        <div>Return 1 mảng 1 phần tử</div>
+        <ul>
+            <li>result</li>
+            <ul>
+                <li>"Thành công"</li>
+                <li>"Thất bại"</li>
+            </ul>
+        </ul>
+    </div>
+
+    <div class = 'element'>
+        <h2>@app.route("/muctieuhientai/&lt;username>", methods=["GET"])</h2>
+        <div>Parameters: username</div>
+        <div>Return 1 mảng 1 phần tử</div>
+        <ul>
+            <li>result</li>
+            <ul>
+                <li>Số tự nhiên</li>
+                <li>null/"Không có"</li>
+            </ul>
+        </ul>
+    </div>
+
+    <div class = 'element'>
+        <h2>@app.route("/chinhsuathongtin", methods=["POST"])</h2>
+        <div>Parameters: username, oldpassword, newpassword, name</div>
+        <div>Return 1 mảng 1 phần tử</div>
+        <ul>
+            <li>result</li>
+            <ul>
+                <li>Thành công</li>
+                <li>"Thất bại"/"Sai mật khẩu"</li>
+            </ul>
+        </ul>
+    </div>
+
+    <hr>
+
     <h2 class='do'>Update: 27/07/2020</h2>
     <div class = 'element'>
         <h2>@app.route("/timtu/&lt;username>/&lt;stringSearch>", methods=["GET"])</h2>
-        <div>ví dụ interlet => internet</div>
+        <div>ví dụ interlet ⇒ internet</div>
         <div>Return 1 mảng 1 phần tử</div>
         <ul>
             <li>result</li>

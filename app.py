@@ -22,14 +22,16 @@ def checkLogin():
     data = [{"_id": result}]
     return app.response_class(json.dumps(data),mimetype='application/json')
 
-# @app.route("/testdangnhap", methods=["POST"])
-# def testcheckLogin():
-#     username = request.args.get('username')
-#     password = request.args.get('password')
-#     global db
-#     result = connection_db.testcheckLogin(db, username, password)
-#     data = [{"_id": result}]
-#     return app.response_class(json.dumps(data),mimetype='application/json')
+@app.route("/chinhsuathongtin", methods=["POST"])
+def editAccount():
+    username = request.args.get('username')
+    old_password = request.args.get('oldpassword')
+    new_password = request.args.get('newpassword')
+    name = request.args.get('name')
+    global db
+    result = connection_db.editAccount(db, username, old_password, new_password, name)
+    data = [{"result": result}]
+    return app.response_class(json.dumps(data),mimetype='application/json')
 
 @app.route("/kiemtrataikhoan/<username>", methods=["GET"])
 def checkAccount(username):
@@ -57,6 +59,20 @@ def home():
 def searchWord(username, stringSearch):
     global db
     result = connection_db.searchWord(db, username, stringSearch)
+    data = [{"result": result}]
+    return app.response_class(json.dumps(data),mimetype='application/json')
+
+@app.route("/datmuctieu/<username>/<int:target>", methods=["GET"])
+def setTarget(username, target):
+    global db
+    result = connection_db.setTarget(db, username, target)
+    data = [{"result": result}]
+    return app.response_class(json.dumps(data),mimetype='application/json')
+
+@app.route("/muctieuhientai/<username>", methods=["GET"])
+def getTarget(username):
+    global db
+    result = connection_db.getTarget(db, username)
     data = [{"result": result}]
     return app.response_class(json.dumps(data),mimetype='application/json')
 
