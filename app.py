@@ -24,9 +24,9 @@ def checkLogin():
 
 @app.route("/chinhsuathongtin", methods=["POST"])
 def editAccount():
-    username = request.args.get('username')
-    old_password = request.args.get('oldpassword')
-    new_password = request.args.get('newpassword')
+    username = request.form['username']
+    old_password = request.form['oldpassword']
+    new_password = request.form['newpassword']
     name = request.args.get('name')
     global db
     result = connection_db.editAccount(db, username, old_password, new_password, name)
@@ -43,9 +43,9 @@ def checkAccount(username):
 
 @app.route("/dangky", methods=["POST"])
 def signup():
-    username = request.args.get('username')
-    password = request.args.get('password')
-    name = request.args.get('name')
+    username = request.form['username']
+    password = request.form['password']
+    name = request.form['name']
     global db
     result = connection_db.signup(db, username, password, name)
     data = [{"result": result}]
