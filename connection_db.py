@@ -1,4 +1,4 @@
-import pymongo
+import pymongo, ast, random
 from pymongo import MongoClient
 import pandas as pd
 import numpy as np
@@ -50,7 +50,7 @@ def signup(db, username, password, name):
         # db = getDB()
         if checkAccount(db, username) == "yes":
             return "thất bại"
-        db.watermelishCollection.insert({"username": username, "password": password, "name": name})
+        db.watermelishCollection.insert({"username": username, "password": password, "name": name, "word_sets": {}, "game1": 0, "game2": 0, "game3": 0})
         return "thành công"
     except:
         return "thất bại"
@@ -105,6 +105,78 @@ def editAccount(db, username, old_password, new_password, name):
     except:
         return "Thất bại"
 
+def getListGroupCard(db, username):
+    try:
+        result = db.watermelishCollection.find({"username": username}, {"word_sets": True})
+        word_sets = [x["word_sets"] for x in result][0]
+        return list(word_sets.keys())
+    except:
+        return "Không có"
+    
+def getListCard(db, username, botu):
+    try:
+        result = db.watermelishCollection.find({"username": username}, {"word_sets": True})
+        word_sets = [x["word_sets"] for x in result][0]
+        word_set = word_sets[botu]
+        return word_set
+    except:
+        return "Không có"
+    
+def createListCard(db, username, tenbotu, listWord):
+    try:
+        result = db.watermelishCollection.find({"username": username}, {"word_sets": True})
+        word_sets = [x["word_sets"] for x in result][0] 
+        if tenbotu in list(word_sets.keys()):
+            return "Tên bộ từ trùng lặp"
+        db.watermelishCollection.update({"username": username}, {"$set": {"word_sets." + tenbotu: list(ast.literal_eval(listWord))}})
+        return "Thành công"
+    except:
+        return "Thất bại"
+    
+def updateListCard(db, username, tenbotucu, tenbotumoi, listWord):
+    try:
+        result = db.watermelishCollection.find({"username": username}, {"word_sets": True})
+        word_sets = [x["word_sets"] for x in result][0] 
+        if tenbotucu not in list(word_sets.keys()):
+            return "Bộ từ không tồn tại"
+        db.watermelishCollection.update({"username": username}, {"$unset": {"word_sets." + tenbotucu: ""}})
+        db.watermelishCollection.update({"username": username}, {"$set": {"word_sets." + tenbotumoi: list(ast.literal_eval(listWord))}})
+        return "Thành công" 
+    except:
+        return "Thất bại"
+    
+def randomGame2(db, username):
+    try:
+        result = db.watermelishCollection.find({"username": username}, {"word_sets": True})
+        word_sets = [x["word_sets"] for x in result][0]
+        word_sets_name = list(word_sets.keys())
+        data = []
+        for i in range(3):
+            word_set_name = word_sets_name[random.randint(0, len(word_sets_name) - 1)]
+            word_set = word_sets[word_set_name]
+            word = word_set[random.randint(0, len(word_set) - 1)]
+            data.append([word[0] + " (" + word[1] + ")", i])
+            data.append([word[2], i])
+        random.shuffle(data)
+        return data 
+    except:
+        return "Thiếu từ"
+    
+def randomGame3(db, username):
+    try:
+        result = db.watermelishCollection.find({"username": username}, {"word_sets": True})
+        word_sets = [x["word_sets"] for x in result][0]
+        word_sets_name = list(word_sets.keys())
+        word_set_name = word_sets_name[random.randint(0, len(word_sets_name) - 1)]
+        word_set = word_sets[word_set_name]
+        word = [""]
+        while len(word[0]) < 4:
+            word = word_set[random.randint(0, len(word_set) - 1)]
+        random_index = random.randint(1, len(word[0]) - 2)
+        data = [word[0][:random_index], word[0][random_index + 2:], word[0], word[1], word[2]]
+        return data 
+    except:
+        return "Thiếu từ"
 # print(searchWord("nhom13", "interlet"))
 
 # db = getDB()

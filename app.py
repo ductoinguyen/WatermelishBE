@@ -13,10 +13,12 @@ db = connection_db.getDB()
 
 @app.route("/dangnhap", methods=["POST"])
 def checkLogin():
-    # username = request.args.get('username')
-    # password = request.args.get('password')
-    username = request.form['username']
-    password = request.form['password']
+    try: 
+        username = request.form['username']
+        password = request.form['password']
+    except:
+        username = request.args.get('username')
+        password = request.args.get('password')
     global db
     result = connection_db.checkLogin(db, username, password)
     data = [{"_id": result}]
@@ -24,10 +26,16 @@ def checkLogin():
 
 @app.route("/chinhsuathongtin", methods=["POST"])
 def editAccount():
-    username = request.form['username']
-    old_password = request.form['oldpassword']
-    new_password = request.form['newpassword']
-    name = request.args.get('name')
+    try:
+        username = request.form['username']
+        old_password = request.form['oldpassword']
+        new_password = request.form['newpassword']
+        name = request.form['name']
+    except:
+        username = request.args.get('username')
+        old_password = request.args.get('oldpassword')
+        new_password = request.args.get('newpassword')
+        name = request.args.get('name')
     global db
     result = connection_db.editAccount(db, username, old_password, new_password, name)
     data = [{"result": result}]
@@ -43,9 +51,14 @@ def checkAccount(username):
 
 @app.route("/dangky", methods=["POST"])
 def signup():
-    username = request.form['username']
-    password = request.form['password']
-    name = request.form['name']
+    try:
+        username = request.form['username']
+        password = request.form['password']
+        name = request.form['name']
+    except:
+        username = request.args.get('username')
+        password = request.args.get('password')
+        name = request.args.get('name')
     global db
     result = connection_db.signup(db, username, password, name)
     data = [{"result": result}]
@@ -76,9 +89,59 @@ def getTarget(username):
     data = [{"result": result}]
     return app.response_class(json.dumps(data),mimetype='application/json')
 
+@app.route("/danhsachcacbotu/<username>", methods=["GET"])
+def getListGroupCard(username):
+    global db
+    result = connection_db.getListGroupCard(db, username)
+    data = [{"result": result}]
+    return app.response_class(json.dumps(data),mimetype='application/json')
+
+@app.route("/danhsachbotu/<username>/<botu>", methods=["GET"])
+def getListCard(username, botu):
+    global db
+    result = connection_db.getListCard(db, username, botu)
+    data = [{"result": result}]
+    return app.response_class(json.dumps(data),mimetype='application/json')
+
+@app.route("/thembotumoi/<username>/<tenbotu>", methods=["GET"])
+def createListCard(username, tenbotu):
+    global db
+    try:
+        listWord = request.form['listword']
+    except:
+        listWord = request.args.get('listword')
+    result = connection_db.createListCard(db, username, tenbotu, listWord)
+    data = [{"result": result}]
+    return app.response_class(json.dumps(data),mimetype='application/json')
+
+@app.route("/chinhsuabotu/<username>/<tenbotucu>/<tenbotumoi>", methods=["GET"])
+def updateListCard(username, tenbotucu, tenbotumoi):
+    global db
+    try:
+        listWord = request.form['listword']
+    except:
+        listWord = request.args.get('listword')
+    result = connection_db.updateListCard(db, username, tenbotucu, tenbotumoi, listWord)
+    data = [{"result": result}]
+    return app.response_class(json.dumps(data),mimetype='application/json')
+
+@app.route("/gameghepcap/<username>", methods=["GET"])
+def randomGame2(username):
+    global db
+    result = connection_db.randomGame2(db, username)
+    data = [{"result": result}]
+    return app.response_class(json.dumps(data),mimetype='application/json')
+
+@app.route("/gamedientu/<username>", methods=["GET"])
+def randomGame3(username):
+    global db
+    result = connection_db.randomGame3(db, username)
+    data = [{"result": result}]
+    return app.response_class(json.dumps(data),mimetype='application/json')
+
 @app.route("/test", methods=["GET"])
 def test():
     return app.response_class(json.dumps([{"ok": 1}]),mimetype='application/json')
 
 if __name__ == "__main__":
-    app.run(debug=True, host='0.0.0.0')
+    app.run(debug=True)

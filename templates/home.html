@@ -14,7 +14,93 @@
 <body>
     <h2 class='do'>Server: http://watermelish.herokuapp.com/</h2><hr>
 
-    <h2 class='do'>Update: 28/07/2020</h2>
+    <h2 class='do'>Update: 19/11/2020</h2>
+    <div class = 'element'>
+        <h2>@app.route("/gameghepcap/&lt;username>", methods=["GET"])</h2>
+        <div>Parameters: username</div>
+        <div>Return 1 mảng 1 phần tử</div>
+        <div>Khi người chơi đã chơi hết mà còn thời gian thì tiếp tục call tiếp api này, mỗi lần trả ra 6 ô (3 từ)</div>
+        <ul>
+            <li>result</li>
+            <ul>
+                <li>Thiếu từ</li>
+                <li>Một mảng 6 phần tử</li>
+                <li>Mỗi phần tử này lại là 1 mảng gồm: text, value_match</li>
+            </ul>
+        </ul>
+    </div>
+    <div class = 'element'>
+        <h2>@app.route("/gamedientu/&lt;username>", methods=["GET"])</h2>
+        <div>Parameters: username</div>
+        <div>Return 1 mảng 1 phần tử</div>
+        <div>Mỗi lần chuyển màn hình là 1 lần call api, luôn thiếu 2 kí tự!</div>
+        <ul>
+            <li>result</li>
+            <ul>
+                <li>Thiếu từ</li>
+                <li>Một mảng 5 phần tử</li>
+                <li>Từ bên trái, Từ bên phải, Từ ban đầu, Từ loại, Nghĩa</li>
+            </ul>
+        </ul>
+    </div>
+    <div class = 'element'>
+        <h2>@app.route("/thembotumoi/&lt;username>/&lt;tenbotu>", methods=["GET"])</h2>
+        <div><b>BACKGROUND BÊN FRONTEND RANDOM TRONG 1 TẬP BACKGROUND TÌM TRƯỚC CHO DỄ</b></div>
+        <div>Parameters: username, tenbotu (tên bộ từ)</div>
+        <div>Body (form): listword, ví dụ: "["a", "b", "c"], ["d", "e",   "f"]" (1 tring các từ (tiếng anh, từ loại, nghĩa))</div>
+        <div>Front-end xử lý tách sâu ở input 1 để lấy 2 cái: từ tiếng anh và từ loại</div>
+        <div>Return 1 mảng 1 phần tử</div>
+        <ul>
+            <li>result</li>
+            <ul>
+                <li>Thành công</li>
+                <li>Thất bại</li>
+                <li>Tên bộ từ trùng lặp</li>
+            </ul>
+        </ul>
+    </div>
+    <div class = 'element'>
+        <h2>@app.route("/chinhsuabotu/&lt;username>/&lt;tenbotucu>/&lt;tenbotumoi>", methods=["GET"])</h2>
+        <div>Tương tự thêm bộ từ mới</div>
+        <div>Parameters: username, tenbotucu, tenbotumoi (2 cái có thể giống nhau)</div>
+        <div>Body (form): listword, ví dụ: "["a", "b", "c"], ["d", "e",   "f"]" (1 tring các từ (tiếng anh, từ loại, nghĩa))</div>
+        <div>Front-end xử lý tách sâu ở input 1 để lấy 2 cái: từ tiếng anh và từ loại</div>
+        <div>Return 1 mảng 1 phần tử</div>
+        <ul>
+            <li>result</li>
+            <ul>
+                <li>Thành công</li>
+                <li>Thất bại</li>
+                <li>Bộ từ không tồn tại</li>
+            </ul>
+        </ul>
+    </div>
+    <div class = 'element'>
+        <h2>@app.route("/danhsachbotu/&lt;username>/&lt;botu>", methods=["GET"])</h2>
+        <div>Parameters: username, botu (tên bộ từ)</div>
+        <div>Return 1 mảng 1 phần tử</div>
+        <ul>
+            <li>result</li>
+            <ul>
+                <li>Một mảng các từ</li>
+                <li>Mỗi từ là 1 mảng gồm 3 phần tử, tiếng Anh, từ loại và nghĩa</li>
+            </ul>
+        </ul>
+    </div>
+    <div class = 'element'>
+        <h2>@app.route("/danhsachcacbotu/&lt;username>", methods=["GET"])</h2>
+        <div>Parameters: username</div>
+        <div>Return 1 mảng 1 phần tử</div>
+        <ul>
+            <li>result</li>
+            <ul>
+                <li>Một mảng các tên bộ từ</li>
+                <li>Không có</li>
+            </ul>
+        </ul>
+    </div> <hr>
+
+    <h2 class='do'>Update: 28/10/2020</h2>
     <div class = 'element'>
         <h2>@app.route("/datmuctieu/&lt;username>/&lt;int:target>", methods=["GET"])</h2>
         <div>Parameters: username, target</div>
@@ -56,7 +142,7 @@
 
     <hr>
 
-    <h2 class='do'>Update: 27/07/2020</h2>
+    <h2 class='do'>Update: 27/10/2020</h2>
     <div class = 'element'>
         <h2>@app.route("/timtu/&lt;username>/&lt;stringSearch>", methods=["GET"])</h2>
         <div>ví dụ interlet ⇒ internet</div>
@@ -72,7 +158,7 @@
     <hr>
 
 
-    <h2 class='do'>Update: 26/07/2020</h2>
+    <h2 class='do'>Update: 26/10/2020</h2>
     <div class = 'element'>
         <h2>@app.route("/dangnhap", methods=["POST"])</h2>
         <div>Parameters: username, password, ví dụ {"username": "nhom13", "password": "nhom13"}</div>
