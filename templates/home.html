@@ -13,7 +13,61 @@
 </head>
 <body>
     <h2 class='do'>Server: http://watermelish.herokuapp.com/</h2><hr>
-
+    <h2 class='do'>Update: 30/11/2020</h2>
+    <div class = 'element'>
+        <h2>@app.route("/gametracnghiem/&lt;username>", methods=["GET"])</h2>
+        <div>Parameters: username</div>
+        <div>Return 1 mảng 1 phần tử</div>
+        <div>Mỗi 1 câu hỏi là 1 lần call api</div>
+        <ul>
+            <li>result</li>
+            <ul>
+                <li>Mảng gồm 4 phần tử mảng</li>
+                <li>Mảng 1 chứa 1 phần tử là Câu hỏi</li>
+                <li>Mảng 2, 3 & 4 chứa 2 phần tử là phương án và (0: sai, 1: đúng) </li>
+            </ul>
+        </ul>
+    </div>
+    <div class = 'element'>
+        <h2>@app.route("/diemgamecaonhat/&lt;username>", methods=["GET"])</h2>
+        <div>Parameters: username</div>
+        <div>Return 1 mảng 1 phần tử</div>
+        <ul>
+            <li>result</li>
+            <ul>
+                <li>Mảng gồm 3 phần tử</li>
+                <li>Trắc nghiệm, Ghép cặp, Điền từ </li>
+            </ul>
+        </ul>
+    </div>
+    <div class = 'element'>
+        <h2>@app.route("/ketquagame/&lt;username>/&lt;game>/&lt;int:score>", methods=["GET"])</h2>
+        <div>Parameters: username, game ("gametracnghiem", "gameghepcap", "gamedientu"), score (điểm hiện tại)</div>
+        <div>Trả về điểm cao nhất, nếu điểm hiện tại cao hơn điểm cao nhất trước đó thì cập nhật database</div>
+        <div>Return 1 mảng 1 phần tử</div>
+        <ul>
+            <li>result</li>
+            <ul>
+                <li>Điểm cao nhất của game đó (max(maxScore, score)) </li>
+            </ul>
+        </ul>
+    </div>
+    <div class = 'element'>
+        <h2>@app.route("/hocbotu/&lt;username>/&lt;tenbotu>", methods=["GET"])</h2>
+        <div>Parameters: username, tenbotu (tên bộ từ)</div>
+        <div>Học bộ từ, trả về 1 trong 3 game (trắc nghiệm, ghép cặp, điền từ)</div>
+        <div>Return 1 mảng 1 phần tử</div>
+        <ul>
+            <li>result</li>
+            <ul>
+                <li>Mảng 2 phần tử</li>
+                <ul>
+                    <li>Loại game </li>
+                    <li>Mảng dữ liệu <b>(đọc lại 3 game kia)</b> </li>
+                </ul>
+            </ul>
+        </ul>
+    </div> <hr>
     <h2 class='do'>Update: 19/11/2020</h2>
     <div class = 'element'>
         <h2>@app.route("/gameghepcap/&lt;username>", methods=["GET"])</h2>
@@ -39,7 +93,7 @@
             <ul>
                 <li>Thiếu từ</li>
                 <li>Một mảng 5 phần tử</li>
-                <li>Từ bên trái, Từ bên phải, Từ ban đầu, Từ loại, Nghĩa</li>
+                <li>Từ bên trái, Từ bên phải, Từ ban đầu, Từ loại, Nghĩa (mục đích gợi ý hoặc hiện thị sau khi trả lời)</li>
             </ul>
         </ul>
     </div>
