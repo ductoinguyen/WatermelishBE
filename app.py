@@ -180,6 +180,20 @@ def statistical(username):
     data = [{"result": result}]
     return app.response_class(json.dumps(data),mimetype='application/json')
 
+@app.route("/checktaobotu/<username>", methods=["GET"])
+def checkCreateWordSet(username):
+    global db
+    result = connection_db.checkCreateWordSet(db, username)
+    data = [{"result": result}]
+    return app.response_class(json.dumps(data),mimetype='application/json')
+
+@app.route("/xoabotu/<username>/<tenbotu>", methods=["GET"])
+def deleteWordSet(username, tenbotu):
+    global db
+    result = connection_db.deleteWordSet(db, username, tenbotu)
+    data = [{"result": result}]
+    return app.response_class(json.dumps(data),mimetype='application/json')
+
 @app.route("/test", methods=["GET"])
 def test():
     return app.response_class(json.dumps([{"ok": 1}]),mimetype='application/json')

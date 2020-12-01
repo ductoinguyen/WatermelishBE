@@ -57,7 +57,7 @@ def signup(db, username, password, name):
         if checkAccount(db, username) == "yes":
             return "thất bại"
         currentDay = getTime()
-        db.watermelishCollection.insert({"username": username, "password": password, "name": name, "word_sets": {}, "game1": 0, "game2": 0, "game3": 0, "today": currentDay, "nowWord": 0, "totalScore": 0, "totalWord": 0})
+        db.watermelishCollection.insert({"username": username, "password": password, "name": name, "word_sets": {}, "game1": 0, "game2": 0, "game3": 0, "today": currentDay, "nowWord": 0, "totalScore": 250, "totalWord": 0})
         return "thành công"
     except:
         return "thất bại"
@@ -131,11 +131,15 @@ def getListCard(db, username, botu):
     
 def createListCard(db, username, tenbotu, listWord):
     try:
-        result = db.watermelishCollection.find({"username": username}, {"word_sets": True})
+        result = db.watermelishCollection.find({"username": username}, {"word_sets": True, "totalScore": True})
+        totalScore = [x["totalScore"] for x in result][0] 
+        if totalScore < 50:
+            return "Thất bại"
         word_sets = [x["word_sets"] for x in result][0] 
         if tenbotu in list(word_sets.keys()):
             return "Tên bộ từ trùng lặp"
         db.watermelishCollection.update({"username": username}, {"$set": {"word_sets." + tenbotu: list(ast.literal_eval(listWord))}})
+        db.watermelishCollection.update({"username": username}, {"$inc": {"totalScore": -50}})
         return "Thành công"
     except:
         return "Thất bại"
@@ -272,6 +276,24 @@ def statistical(db, username):
     result = db.watermelishCollection.find({"username": username}, {"today": True, "totalScore": True, "totalWord": True, "nowWord": True, "target": True})
     for x in result:
         return [x["today"], x["totalScore"], x["totalWord"], x["nowWord"], x["target"]]
+    
+def checkCreateWordSet(db, username):
+    try:
+        result = db.watermelishCollection.find({"username": username}, {"totalScore": True})
+        totalScore = [x["totalScore"] for x in result][0] 
+        if totalScore < 50:
+            return "Không được"
+        return "Có thể"
+    except:
+        return "Không được"
+
+def deleteWordSet(db, username, tenbotu):
+    try:
+        db.watermelishCollection.update({"username": username}, {"$unset": {"word_sets." + tenbotu: ""}})
+        db.watermelishCollection.update({"username": username}, {"$inc": {"totalScore": 50}})
+        return "Thành công"
+    except:
+        return "Thất bại"
 # print(searchWord("nhom13", "interlet"))
 
 # db = getDB()
