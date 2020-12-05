@@ -132,10 +132,9 @@ def getListCard(db, username, botu):
 def createListCard(db, username, tenbotu, listWord):
     try:
         result = db.watermelishCollection.find({"username": username}, {"word_sets": True, "totalScore": True})
-        totalScore = [x["totalScore"] for x in result][0] 
+        (totalScore, word_sets) = [(x["totalScore"], x["word_sets"]) for x in result][0] 
         if totalScore < 50:
             return "Thất bại"
-        word_sets = [x["word_sets"] for x in result][0] 
         if tenbotu in list(word_sets.keys()):
             return "Tên bộ từ trùng lặp"
         db.watermelishCollection.update({"username": username}, {"$set": {"word_sets." + tenbotu: list(ast.literal_eval(listWord))}})
