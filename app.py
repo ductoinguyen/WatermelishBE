@@ -103,7 +103,7 @@ def getListCard(username, botu):
     data = [{"result": result}]
     return app.response_class(json.dumps(data),mimetype='application/json')
 
-@app.route("/thembotumoi/<username>/<tenbotu>", methods=["GET"])
+@app.route("/thembotumoi/<username>/<tenbotu>", methods=["GET", "POST"])
 def createListCard(username, tenbotu):
     global db
     try:
@@ -114,7 +114,7 @@ def createListCard(username, tenbotu):
     data = [{"result": result}]
     return app.response_class(json.dumps(data),mimetype='application/json')
 
-@app.route("/chinhsuabotu/<username>/<tenbotucu>/<tenbotumoi>", methods=["GET"])
+@app.route("/chinhsuabotu/<username>/<tenbotucu>/<tenbotumoi>", methods=["GET", "POST"])
 def updateListCard(username, tenbotucu, tenbotumoi):
     global db
     try:
