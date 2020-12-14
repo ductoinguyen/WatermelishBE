@@ -103,10 +103,10 @@ def getTarget(username):
 #     data = [{"result": result}]
 #     return app.response_class(json.dumps(data),mimetype='application/json')
 
-@app.route("/danhsachcacbotu/<username>/<int:numPage>", methods=["GET"])
+@app.route("/danhsachcacbotu/<username>", methods=["GET"])
 def getListGroupCard(username, numPage):
     global db
-    result = connection_db.getListGroupCard(db, username, numPage)
+    result = connection_db.getListGroupCard(db, username)
     data = [{"result": result}]
     return app.response_class(json.dumps(data),mimetype='application/json')
 
