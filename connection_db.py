@@ -112,7 +112,7 @@ def editAccount(db, username, old_password, new_password, name):
     except:
         return "Thất bại"
 
-def getListGroupCard(db, username, maxNum = 5, numPage=1):
+def getListGroupCard1(db, username, maxNum = 5, numPage=1):
     try:
         result = db.watermelishCollection.find({"username": username}, {"word_sets": True})
         word_sets = [x["word_sets"] for x in result][0]
@@ -122,7 +122,7 @@ def getListGroupCard(db, username, maxNum = 5, numPage=1):
     except:
         return "Không có"
     
-def getListCard(db, username, botu, maxNum = 5, numPage = 1):
+def getListCard1(db, username, botu, maxNum = 5, numPage = 1):
     try:
         result = db.watermelishCollection.find({"username": username}, {"word_sets": True})
         word_sets = [x["word_sets"] for x in result][0]

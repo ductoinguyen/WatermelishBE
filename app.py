@@ -90,16 +90,16 @@ def getTarget(username):
     return app.response_class(json.dumps(data),mimetype='application/json')
 
 @app.route("/danhsachcacbotu/<username>/<int:maxNum>/<int:numPage>", methods=["GET"])
-def getListGroupCard(username, maxNum, numPage):
+def getListGroupCard1(username, maxNum, numPage):
     global db
-    result = connection_db.getListGroupCard(db, username, maxNum, numPage)
+    result = connection_db.getListGroupCard1(db, username, maxNum, numPage)
     data = [{"result": result}]
     return app.response_class(json.dumps(data),mimetype='application/json')
 
 @app.route("/danhsachbotu/<username>/<botu>/<int:maxNum>/<int:numPage>", methods=["GET"])
-def getListCard(username, botu, maxNum, numPage):
+def getListCard1(username, botu, maxNum, numPage):
     global db
-    result = connection_db.getListCard(db, username, botu, maxNum, numPage)
+    result = connection_db.getListCard1(db, username, botu, maxNum, numPage)
     data = [{"result": result}]
     return app.response_class(json.dumps(data),mimetype='application/json')
 
